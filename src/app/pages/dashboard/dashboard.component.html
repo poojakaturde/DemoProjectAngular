@@ -1,0 +1,67 @@
+<table class="table table-striped">
+  <thead>
+    <tr>
+      <th scope="col">Id</th>
+      <th scope="col">Employee Name</th>
+      <th scope="col">Designation</th>
+      <th scope="col">Project</th>
+      <th scope="col">Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let country of countries">
+      <th scope="row">{{ country.id }}</th>
+      <td>{{ country.ename }}</td>
+      <td>{{ country.designation }}</td>
+      <td>{{ country.project }}</td>
+      <td>
+        <i class="material-icons" (click)="open(content,country.id)">visibility</i>&nbsp;
+        <i class="material-icons" (click)="open(content,country.id)">edit</i>&nbsp;
+        <i class="material-icons" (click)="open(content,country.id)">delete</i>&nbsp;
+
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<div class="d-flex justify-content-between p-2">
+  <ngb-pagination [collectionSize]="collectionSize" [(page)]="page" [pageSize]="pageSize"
+    (pageChange)="refreshCountries()">
+  </ngb-pagination>
+
+  <select class="form-select" style="width: auto" [(ngModel)]="pageSize" (ngModelChange)="refreshCountries()">
+    <option [ngValue]="2">2 items per page</option>
+    <option [ngValue]="4">4 items per page</option>
+    <option [ngValue]="6">6 items per page</option>
+  </select>
+</div>
+
+
+<ng-template #content let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Profile update</h4>
+    <button type="button" class="btn-close" aria-label="Close" (click)="modal.dismiss('Cross click')"></button>
+  </div>
+  <div class="modal-body">
+    <form>
+      <div class="form-group">
+        <label >Employee Id</label>
+        <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Enter email">
+        <br/>
+        <label >Employee Name</label>
+        <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Enter email">
+        <br/>
+        <label >Designation</label>
+        <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Enter email">
+        <br/>
+        <label >Project Name</label>
+        <input type="email" class="form-control" id="exampleInputEmail1" placeholder="Enter email">
+        <br/>
+      
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Save</button>
+  </div>
+</ng-template>
