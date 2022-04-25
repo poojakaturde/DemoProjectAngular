@@ -1,6 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
 import { FormGroup, FormBuilder } from '@angular/forms'
+import { updateDefaultClause } from 'typescript';
 
 interface Country {
   id?: number;
@@ -68,6 +69,7 @@ export class DashboardComponent implements OnInit{
     }, (reason) => {
       this.closeResult = `Dismissed ${this.getDismissReason(reason)}`;
     });
+
   }
 
   private getDismissReason(reason: any): string {
@@ -86,5 +88,14 @@ export class DashboardComponent implements OnInit{
       .slice((this.page - 1) * this.pageSize, (this.page - 1) * this.pageSize + this.pageSize);
   }
     ngOnInit(){}
+
+  deleteData(id:any){
+    const index = this.countries.indexOf(id);
+    this.countries.splice(index,1);
+  }
+
+  updateEmp(){
+    
+  }
 
 }

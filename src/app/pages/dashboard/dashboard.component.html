@@ -1,3 +1,4 @@
+<div style="background-color: rgb(255, 255, 255);">
 <table class="table table-striped">
   <thead>
     <tr>
@@ -15,9 +16,9 @@
       <td>{{ country.designation }}</td>
       <td>{{ country.project }}</td>
       <td>
-        <i class="material-icons" (click)="open(content,country.id)">visibility</i>&nbsp;
-        <i class="material-icons" (click)="open(content,country.id)">edit</i>&nbsp;
-        <i class="material-icons" (click)="open(content,country.id)">delete</i>&nbsp;
+        <i class="material-icons" (click)="open(content,country)">visibility</i>&nbsp;
+        <i class="material-icons" (click)="open(content,country)">edit</i>&nbsp;
+        <i class="material-icons" (click)="deleteData(country)">delete</i>&nbsp;
 
       </td>
     </tr>
@@ -62,6 +63,7 @@
     </form>
   </div>
   <div class="modal-footer">
-    <button type="button" class="btn btn-outline-dark" (click)="modal.close('Save click')">Save</button>
+    <button type="button" class="btn btn-success" (click)="updateEmp()">Update</button>
   </div>
 </ng-template>
+</div>
