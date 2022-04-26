@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {NgbModal, ModalDismissReasons} from '@ng-bootstrap/ng-bootstrap';
 import { FormGroup, FormBuilder } from '@angular/forms'
-import { updateDefaultClause } from 'typescript';
 
 interface Country {
   id?: number;
@@ -12,7 +11,7 @@ interface Country {
 
 const COUNTRIES: Country[] = [
   {
-    ename: 'Shrinivas',
+    ename: 'Shriniivas',
     designation: 'Manager',
     project: 'Eversana'
    
