@@ -1,0 +1,52 @@
+<button type="button" class="btn btn-info btn-lg" (click)="openModal()">Add New Project</button>
+<div class="modal" tabindex="-1" role="dialog" [ngStyle]="{'display':display}">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h4 class="modal-title">Add Project</h4>
+        <button type="button" class="close" aria-label="Close" (click)="onCloseHandled()"><span
+            aria-hidden="true">&times;</span></button>
+      </div>
+      <div class="modal-body">
+        <form class="overflow-auto" [formGroup]="formValue">
+          <div class="mb-3">
+            <label for="exampleInputEmail1" class="form-label">Project ID</label>
+            <input type="text" class="form-control" formControlName="id" id="exampleInputEmail1"
+              aria-describedby="emailHelp">
+          </div>
+          <div class="mb-3">
+            <label for="exampleInputPassword1" class="form-label">Project Name</label>
+            <input type="text" class="form-control" formControlName="name" id="exampleInputPassword1">
+          </div>
+          <div class="mb-3">
+            <label for="exampleInputPassword1" class="form-label">Status</label>
+            <input type="text" class="form-control" formControlName="status" id="exampleInputPassword1">
+          </div>
+          <div class="mb-3">
+            <label for="exampleInputPassword1" class="form-label">Admin</label>
+            <input type="text" class="form-control" formControlName="admin" id="exampleInputPassword1">
+          </div>
+          <div class="mb-3">
+            <label for="exampleInputPassword1" class="form-label">Manager</label>
+            <input type="text" class="form-control" formControlName="manager" id="exampleInputPassword1">
+          </div>
+          <div class="mb-3">
+            <label for="exampleInputPassword1" class="form-label">Roles</label>
+            <input type="text" class="form-control" formControlName="role" id="exampleInputPassword1">
+          </div>
+          <div class="mb-3">
+            <label for="exampleInputPassword1" class="form-label">Start Date</label>
+            <input type="text" class="form-control" formControlName="sdate" id="exampleInputPassword1">
+          </div>
+          <div class="mb-3">
+            <label for="exampleInputPassword1" class="form-label">End Date</label>
+            <input type="text" class="form-control" formControlName="edate" id="exampleInputPassword1">
+          </div>
+        </form>
+      </div>
+      <div class="modal-footer">
+        <button type="submit" class="btn btn-primary" (click)="addProjectData()">Submit</button>
+      </div>
+    </div>
+  </div>
+</div>

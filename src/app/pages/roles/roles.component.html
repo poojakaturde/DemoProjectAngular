@@ -1,0 +1,68 @@
+<button type="button" class="btn btn-info btn-lg" (click)="openModal()">Add Role</button>
+<div class="modal" tabindex="-1" role="dialog" [ngStyle]="{'display':display}">
+      <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                  <div class="modal-header">
+                        <h4 class="modal-title">Role</h4>
+                        <button type="button" class="close" aria-label="Close" (click)="onCloseHandled()"><span
+                                    aria-hidden="true">&times;</span></button>
+                  </div>
+                  <div class="modal-body">
+                        <form [formGroup]="formValue">
+                              <div class="mb-3">
+                                    <label for="exampleInputEmail1" class="form-label">Role ID</label>
+                                    <input type="text" class="form-control" formControlName="id" id="exampleInputEmail1"
+                                          aria-describedby="emailHelp">
+                              </div>
+                              <div class="mb-3">
+                                    <label for="exampleInputPassword1" class="form-label">Role Name</label>
+                                    <input type="text" class="form-control" formControlName="name"
+                                          id="exampleInputPassword1">
+                              </div>
+                              <div class="mb-3">
+                                    <label for="exampleInputPassword1" class="form-label">Status</label>
+                                    <input type="text" class="form-control" formControlName="status"
+                                          id="exampleInputPassword1">
+                              </div>
+                              <div class="mb-3">
+                                    <label for="exampleInputPassword1" class="form-label">Permissions</label>
+                                    <input type="text" class="form-control" formControlName="permissions"
+                                          id="exampleInputPassword1">
+                              </div>
+                        </form>
+                  </div>
+                  <div class="modal-footer">
+                        <button *ngIf="submitBtn" type="submit" class="btn btn-primary" (click)="addData()">Submit</button>
+                        <button *ngIf="viewBtn" type="submit" class="btn btn-primary" (click)="viewData()">Close</button>
+                        <button *ngIf="showUpdateBtn" type="button" (click)="updateData()" class="btn btn-success">Update
+                              Details</button>
+                  </div>
+            </div>
+      </div>
+</div>
+
+<table class="table">
+      <thead>
+            <tr>
+                  <th scope="col">Id</th>
+                  <th scope="col">Name</th>
+                  <th scope="col">Status</th>
+                  <th scope="col">Permissions</th>
+                  <th scope="col">Action</th>
+            </tr>
+      </thead>
+      <tbody>
+            <tr *ngFor="let data of roleData">
+                  <td>{{data.id}}</td>
+                  <td>{{data.name}}</td>
+                  <td>{{data.status}}</td>
+                  <td>{{data.permissions}}</td>
+                  <td>
+                        <i class="material-icons" (click)="ViewRole(data)">visibility</i>&nbsp;
+                        <i class="material-icons" (click)="updateRole(data)">edit</i>&nbsp;
+                        <i class="material-icons" (click)="deleteRole(data)">delete</i>&nbsp;
+
+                  </td>
+            </tr>
+      </tbody>
+</table>
