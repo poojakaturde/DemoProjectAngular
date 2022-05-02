@@ -2,47 +2,56 @@
 <div class="modal" tabindex="-1" role="dialog" [ngStyle]="{'display':display}">
       <div class="modal-dialog" role="document">
             <div class="modal-content">
-                  <div class="modal-header">
-                        <h4 class="modal-title">Role</h4>
-                        <button type="button" class="close" aria-label="Close" (click)="onCloseHandled()"><span
-                                    aria-hidden="true">&times;</span></button>
+                  <div class="modalHeader">
+                        <p>Role <span><button type="button" class="close" style="margin-right: 20px;" aria-label="Close" (click)="onCloseHandled()"><span
+                              aria-hidden="true">&times;</span></button></span></p>
                   </div>
+                  <hr style="height: 0%; width: 95%; align-self: center;">
                   <div class="modal-body">
                         <form [formGroup]="formValue">
-                              <div class="mb-3">
-                                    <label for="exampleInputEmail1" class="form-label">Role ID</label>
-                                    <input type="text" class="form-control" formControlName="id" id="exampleInputEmail1"
-                                          aria-describedby="emailHelp">
+                              <div class="form-floating mb-3">
+
+                                    <input type="text" class="form-control" formControlName="id" id="floatingInput"
+                                          placeholder="id">
+                                    <label for="floatingInput">Role ID</label>
                               </div>
-                              <div class="mb-3">
-                                    <label for="exampleInputPassword1" class="form-label">Role Name</label>
-                                    <input type="text" class="form-control" formControlName="name"
-                                          id="exampleInputPassword1">
+                              <div class="form-floating mb-3">
+                                    <input type="text" class="form-control" formControlName="name" id="floatingInput"
+                                          placeholder="Role Name">
+                                    <label for="floatingInput">Role Name</label>
                               </div>
-                              <div class="mb-3">
-                                    <label for="exampleInputPassword1" class="form-label">Status</label>
-                                    <input type="text" class="form-control" formControlName="status"
-                                          id="exampleInputPassword1">
+                              
+                              <div class="form-floating mb-3">
+                                    
+                                    <input type="text" class="form-control" formControlName="status" id="floatingInput"
+                                          placeholder="role status">
+                                    <label for="floatingInput">Status</label>
                               </div>
-                              <div class="mb-3">
-                                    <label for="exampleInputPassword1" class="form-label">Permissions</label>
+                              <div class="form-floating mb-3">
                                     <input type="text" class="form-control" formControlName="permissions"
-                                          id="exampleInputPassword1">
+                                          id="exampleInputPassword1" placeholder="permissions">
+                                    <label for="exampleInputPassword1">Permissions</label>
                               </div>
                         </form>
                   </div>
-                  <div class="modal-footer">
-                        <button *ngIf="submitBtn" type="submit" class="btn btn-primary" (click)="addData()">Submit</button>
-                        <button *ngIf="viewBtn" type="submit" class="btn btn-primary" (click)="viewData()">Close</button>
-                        <button *ngIf="showUpdateBtn" type="button" (click)="updateData()" class="btn btn-success">Update
+                  <hr style="height: 0%; width: 95%; align-self: center;">
+                  <div class="modalFooter">
+                        <button *ngIf="submitBtn" type="button" class="btn btn-info btn-lg"
+                              (click)="addData()">Submit</button>
+                        <button *ngIf="viewBtn" type="button" class="btn btn-outline-info"
+                              (click)="viewData()">Close</button>
+                        <button *ngIf="showUpdateBtn" type="button" (click)="updateData()"
+                              class="btn btn-outline-primary">Update
                               Details</button>
                   </div>
             </div>
       </div>
 </div>
 
+<hr>
+
 <table class="table">
-      <thead>
+      <thead style="background-color: #acf; color: black;">
             <tr>
                   <th scope="col">Id</th>
                   <th scope="col">Name</th>
@@ -51,7 +60,7 @@
                   <th scope="col">Action</th>
             </tr>
       </thead>
-      <tbody>
+      <tbody style="background-color: rgb(225, 238, 255); color: black;">
             <tr *ngFor="let data of roleData">
                   <td>{{data.id}}</td>
                   <td>{{data.name}}</td>

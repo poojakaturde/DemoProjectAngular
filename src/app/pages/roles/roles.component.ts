@@ -2,12 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { RoleData } from './roles.model';
-import { data } from 'jquery';
 
 @Component({
   moduleId: module.id,
   selector: 'roles-cmp',
-  templateUrl: 'roles.component.html'
+  templateUrl: 'roles.component.html',
+  styleUrls: ['./roles.component.scss']
 })
 
 export class RolesComponent implements OnInit {
@@ -19,7 +19,8 @@ export class RolesComponent implements OnInit {
   showUpdateBtn!:boolean;
   viewBtn!: boolean;
 
-  constructor(private formBuilder: FormBuilder, private http: HttpClient) { }
+  constructor(private formBuilder: FormBuilder, private http: HttpClient) {
+   }
   display = "none";
 
   ngOnInit(): void {
@@ -62,7 +63,6 @@ export class RolesComponent implements OnInit {
   getRoleData() {
     this.http.get("http://localhost:3000/posts").subscribe((res) => {
       this.roleData = res;
-      console.log(this.roleData)
     })
 
   }
@@ -117,4 +117,5 @@ export class RolesComponent implements OnInit {
     })
   }
 
+  
 }

@@ -1,14 +1,14 @@
-<button type="button" class="btn btn-info btn-lg" (click)="openModal()">Add New Project</button>
+<button type="button" class="btn btn-info btn-lg" (click)="openModal()">Add Project</button>
 <div class="modal" tabindex="-1" role="dialog" [ngStyle]="{'display':display}">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
       <div class="modal-header">
-        <h4 class="modal-title">Add Project</h4>
+        <h4 class="modal-title">Project</h4>
         <button type="button" class="close" aria-label="Close" (click)="onCloseHandled()"><span
             aria-hidden="true">&times;</span></button>
       </div>
       <div class="modal-body">
-        <form class="overflow-auto" [formGroup]="formValue">
+        <form style="overflow: scroll; height: 450px; overflow-x: hidden;" [formGroup]="formValue">
           <div class="mb-3">
             <label for="exampleInputEmail1" class="form-label">Project ID</label>
             <input type="text" class="form-control" formControlName="id" id="exampleInputEmail1"
@@ -45,8 +45,45 @@
         </form>
       </div>
       <div class="modal-footer">
-        <button type="submit" class="btn btn-primary" (click)="addProjectData()">Submit</button>
+        <button *ngIf="submitBtn" type="submit" class="btn btn-primary" (click)="addData()">Submit</button>
+        <button *ngIf="viewBtn" type="submit" class="btn btn-primary" (click)="viewData()">Close</button>
+        <button *ngIf="showUpdateBtn" type="button" (click)="updateData()" class="btn btn-success">Update
+          Details</button>
       </div>
     </div>
   </div>
 </div>
+<hr>
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">Id</th>
+      <th scope="col">Name</th>
+      <th scope="col">Status</th>
+      <th scope="col">Admin</th>
+      <th scope="col">Manager</th>
+      <th scope="col">Role</th>
+      <th scope="col">Start Date</th>
+      <th scope="col">End Date</th>
+      <th scope="col">Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let data of projectData">
+      <td>{{data.id}}</td>
+      <td>{{data.name}}</td>
+      <td>{{data.status}}</td>
+      <td>{{data.admin}}</td>
+      <td>{{data.manager}}</td>
+      <td>{{data.role}}</td>
+      <td>{{data.sdate}}</td>
+      <td>{{data.edate}}</td>
+      <td>
+        <i class="material-icons" (click)="ViewProject(data)">visibility</i>&nbsp;
+        <i class="material-icons" (click)="updateProject(data)">edit</i>&nbsp;
+        <i class="material-icons" (click)="deleteProject(data)">delete</i>&nbsp;
+
+      </td>
+    </tr>
+  </tbody>
+</table>
