@@ -1,5 +1,5 @@
 export class ProjectData {
-    id:number ;
+    id:string ;
     name:string ;
     status:string;
     admin:string ;

@@ -10,21 +10,17 @@
       <div class="modal-body">
         <form style="overflow: scroll; height: 450px; overflow-x: hidden;" [formGroup]="formValue">
           <div class="mb-3">
-            <label for="exampleInputEmail1" class="form-label">Project ID</label>
-            <input type="text" class="form-control" formControlName="id" id="exampleInputEmail1"
-              aria-describedby="emailHelp">
-          </div>
-          <div class="mb-3">
             <label for="exampleInputPassword1" class="form-label">Project Name</label>
             <input type="text" class="form-control" formControlName="name" id="exampleInputPassword1">
           </div>
           <div class="mb-3">
-            <label for="exampleInputPassword1" class="form-label">Status</label>
-            <input type="text" class="form-control" formControlName="status" id="exampleInputPassword1">
-          </div>
-          <div class="mb-3">
             <label for="exampleInputPassword1" class="form-label">Admin</label>
             <input type="text" class="form-control" formControlName="admin" id="exampleInputPassword1">
+          </div>
+          <label class="form-label">Status</label>
+          <div class="custom-control custom-switch mb-3">
+            <input type="checkbox" class="custom-control-input" id="customSwitch1" formControlName="status">
+            <label class="custom-control-label" for="customSwitch1" aria-labelledby="Status"></label>
           </div>
           <div class="mb-3">
             <label for="exampleInputPassword1" class="form-label">Manager</label>
@@ -36,11 +32,11 @@
           </div>
           <div class="mb-3">
             <label for="exampleInputPassword1" class="form-label">Start Date</label>
-            <input type="text" class="form-control" formControlName="sdate" id="exampleInputPassword1">
+            <input type="date" class="form-control" formControlName="sdate" id="exampleInputPassword1">
           </div>
           <div class="mb-3">
             <label for="exampleInputPassword1" class="form-label">End Date</label>
-            <input type="text" class="form-control" formControlName="edate" id="exampleInputPassword1">
+            <input type="date" class="form-control" formControlName="edate" id="exampleInputPassword1">
           </div>
         </form>
       </div>
@@ -57,7 +53,6 @@
 <table class="table">
   <thead>
     <tr>
-      <th scope="col">Id</th>
       <th scope="col">Name</th>
       <th scope="col">Status</th>
       <th scope="col">Admin</th>
@@ -69,8 +64,7 @@
     </tr>
   </thead>
   <tbody>
-    <tr *ngFor="let data of projectData">
-      <td>{{data.id}}</td>
+    <tr *ngFor="let data of projectData | paginate: { itemsPerPage: count, currentPage: p }">
       <td>{{data.name}}</td>
       <td>{{data.status}}</td>
       <td>{{data.admin}}</td>
@@ -87,3 +81,7 @@
     </tr>
   </tbody>
 </table>
+
+<div class="text-right">
+  <pagination-controls (pageChange)="p = $event"></pagination-controls>
+</div>

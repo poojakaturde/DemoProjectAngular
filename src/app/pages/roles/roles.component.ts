@@ -2,7 +2,12 @@ import { Component, OnInit } from '@angular/core';
 import { FormGroup, FormBuilder } from '@angular/forms';
 import { HttpClient } from '@angular/common/http';
 import { RoleData } from './roles.model';
-
+import {COMMA, ENTER} from '@angular/cdk/keycodes';
+import {ElementRef, ViewChild} from '@angular/core';
+import {MatAutocompleteSelectedEvent} from '@angular/material/autocomplete';
+import {MatChipInputEvent} from '@angular/material/chips';
+import {Observable} from 'rxjs';
+import {map, startWith} from 'rxjs/operators';
 @Component({
   moduleId: module.id,
   selector: 'roles-cmp',
@@ -18,19 +23,56 @@ export class RolesComponent implements OnInit {
   submitBtn!:boolean;
   showUpdateBtn!:boolean;
   viewBtn!: boolean;
-
-  constructor(private formBuilder: FormBuilder, private http: HttpClient) {
-   }
+  isChecked = true;
+  p: Number = 1;
+  count: Number = 3;
   display = "none";
+  separatorKeysCodes: number[] = [ENTER, COMMA];
+  permissionsSelected: string[];
+  allPermissions: any ;
+  filteredPermissions: Observable<string[]>;
+  @ViewChild('permissionInput') permissionInput: ElementRef<HTMLInputElement>;
+  
+  constructor(private formBuilder: FormBuilder, private http: HttpClient) {
 
+   }
+  
+   add(event: MatChipInputEvent): void {
+    const value = (event.value || '').trim();
+    console.log(value)
+    if (value) {
+      this.permissionsSelected.push(value);
+    }
+    this.formValue.value.permissions.setValue(null);
+  }
+
+  remove(permission: string): void {
+    const index = this.permissionsSelected.indexOf(permission);
+
+    if (index >= 0) {
+      this.permissionsSelected.splice(index, 1);
+    }
+  }
+
+  selected(event: MatAutocompleteSelectedEvent): void {
+    console.log(event);
+    this.permissionsSelected.push(event.option.viewValue);
+    console.log(this.permissionsSelected)
+    this.permissionInput.nativeElement.value = '';
+    this.formValue.value.permissions.setValue(null);
+  }
+  
   ngOnInit(): void {
     this.formValue = this.formBuilder.group({
       id: [''],
       name: [''],
       status: [''],
-      permissions: ['']
+      permissions: [''],
+  
     })
+    this.getPermissionData();
     this.getRoleData();
+    
   }
 
   openModal() {
@@ -38,6 +80,7 @@ export class RolesComponent implements OnInit {
     this.submitBtn=true;
     this.showUpdateBtn=false;
     this.viewBtn=false;
+    
   }
   onCloseHandled() {
     this.display = "none";
@@ -45,11 +88,13 @@ export class RolesComponent implements OnInit {
 
   addData() {
     
-    console.log(this.formValue.value)
+    
     this.onCloseHandled();
     this.roleObject.id = this.formValue.value.id;
     this.roleObject.name = this.formValue.value.name;
-    this.roleObject.status = this.formValue.value.status;
+    this.formValue.value.status ? this.roleObject.status = 'Active': this.roleObject.status = 'Inactive';
+    this.formValue.controls['permissions'].setValue(this.permissionsSelected);
+    console.log(this.formValue.value)
     this.roleObject.permissions = this.formValue.value.permissions;
 
     this.http.post<any>("http://localhost:3000/posts", this.roleObject).subscribe((res) => {
@@ -67,6 +112,13 @@ export class RolesComponent implements OnInit {
 
   }
 
+  getPermissionData() {
+    this.http.get("http://localhost:3000/profile").subscribe((res) => {
+      this.allPermissions=res;
+    })
+
+  }
+
   deleteRole(data: any) {
     this.http.delete("http://localhost:3000/posts/" + data.id).subscribe((res) => {
       console.log(res);
@@ -79,14 +131,15 @@ export class RolesComponent implements OnInit {
     this.viewBtn=true;
     this.submitBtn=false;
     this.showUpdateBtn=false;
-    this.formValue.controls['id'].setValue(data.id);
+    
     this.formValue.controls['name'].setValue(data.name);
     this.formValue.controls['status'].setValue(data.status);
-    this.formValue.controls['permissions'].setValue(data.permissions);
+    this.permissionsSelected=data.permissions;
+    this.formValue.controls['permissions'].setValue(this.permissionsSelected);
   }
 
   viewData(){
-    this.formValue.reset();
+   
     this.display = "none";
   }
 
@@ -99,15 +152,15 @@ export class RolesComponent implements OnInit {
     this.formValue.controls['id'].setValue(data.id)
     this.formValue.controls['name'].setValue(data.name);
     this.formValue.controls['status'].setValue(data.status);
-    this.formValue.controls['permissions'].setValue(data.permissions);
-    
+    this.permissionsSelected=data.permissions;
+    this.formValue.controls['permissions'].setValue(this.permissionsSelected);
   }
 
   updateData(){
     this.roleObject.id = this.formValue.value.id;
     this.roleObject.name = this.formValue.value.name;
-    this.roleObject.status = this.formValue.value.status;
-    this.roleObject.permissions = this.formValue.value.permissions;
+    this.formValue.value.status ? this.roleObject.status = 'Active': this.roleObject.status = 'Inactive'
+    this.roleObject.permissions = this.permissionsSelected;
 
     this.http.put("http://localhost:3000/posts/"+this.roleObject.id,this.roleObject).subscribe((res) => {
       console.log(res);

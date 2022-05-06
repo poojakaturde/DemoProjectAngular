@@ -17,6 +17,8 @@ export class ProjectsComponent {
   submitBtn!: boolean;
   showUpdateBtn!: boolean;
   viewBtn!: boolean;
+  p: Number = 1;
+  count: Number = 3;
 
   constructor(private formBuilder: FormBuilder, private http: HttpClient) { }
   display = "none";
@@ -25,7 +27,7 @@ export class ProjectsComponent {
     this.formValue = this.formBuilder.group({
       id: [''],
       name: [''],
-      status: [''],
+      status:false,
       admin: [''],
       manager: [''],
       role: [''],
@@ -40,18 +42,19 @@ export class ProjectsComponent {
     this.submitBtn = true;
     this.showUpdateBtn = false;
     this.viewBtn = false;
+    this.formValue.reset();
   }
   onCloseHandled() {
     this.display = "none";
   }
 
   addData() {
-
+    
     console.log(this.formValue.value)
     this.onCloseHandled();
     this.projectObject.id = this.formValue.value.id;
     this.projectObject.name = this.formValue.value.name;
-    this.projectObject.status = this.formValue.value.status;
+    this.formValue.value.status ? this.projectObject.status = 'Active': this.projectObject.status = 'Inactive'
     this.projectObject.admin = this.formValue.value.admin;
     this.projectObject.manager = this.formValue.value.manager;
     this.projectObject.role = this.formValue.value.role;

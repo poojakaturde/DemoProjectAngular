@@ -1,25 +1,69 @@
 {
   "posts": [
     {
-      "id": "1",
-      "name": "shrinivas",
-      "status": "active",
-      "permissions": "yes"
+      "id": 1,
+      "name": "Developer",
+      "status": "Active",
+      "permissions": [
+        "Process Document",
+        "View User"
+      ]
+    },
+    {
+      "id": 2,
+      "name": "pooja",
+      "status": "Active",
+      "permissions": [
+        "Process Document",
+        "Extract Document"
+      ]
+    },
+    {
+      "id": 3,
+      "name": "shri",
+      "status": "Active",
+      "permissions": [
+        "Update User"
+      ]
     }
   ],
   "comments": [
     {
+      "id": "1",
+      "name": "Eversana",
+      "status": "Active",
+      "admin": "Pooja",
+      "manager": "Akshay",
+      "role": "Developer",
+      "sdate": "04-05-2022",
+      "edate": "26-06-2022"
+    },
+    {
       "id": "2",
       "name": "NTS",
+      "status": true,
+      "admin": "Pooja",
+      "manager": "shree",
+      "role": "hjkl",
+      "sdate": "2022-05-07",
+      "edate": "2022-05-31"
+    },
+    {
+      "id": "lMfQBz8",
+      "name": "Cardinal",
       "status": "Active",
-      "admin": "Shrinivas",
-      "manager": "Pooja",
-      "role": "Tester",
-      "sdate": "12-09-1997",
-      "edate": "16-05-2000"
+      "admin": "shree",
+      "manager": "pooja",
+      "role": "developer",
+      "sdate": "2022-05-26",
+      "edate": "2022-08-25"
     }
   ],
-  "profile": {
-    "name": "typicode"
-  }
+  "profile": [
+    "Update User",
+    "View User",
+    "Process Document",
+    "Extract Document",
+    "Update Processed Document"
+  ]
 }

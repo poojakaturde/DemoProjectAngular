@@ -1,6 +1,6 @@
 export class RoleData {
-    id:number = 0;
+    id:string = '';
     name:string ='';
     status:string = '';
-    permissions:string = '';
+    permissions:any = '';
 }
