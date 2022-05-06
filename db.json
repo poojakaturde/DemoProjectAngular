@@ -25,6 +25,23 @@
       "permissions": [
         "Update User"
       ]
+    },
+    {
+      "id": 4,
+      "name": "shrinivas",
+      "status": "Active",
+      "permissions": [
+        "Process Document"
+      ]
+    },
+    {
+      "id": 5,
+      "name": "Tester",
+      "status": "Active",
+      "permissions": [
+        "Process Document",
+        "Update Processed Document"
+      ]
     }
   ],
   "comments": [

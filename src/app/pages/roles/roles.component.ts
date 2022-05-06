@@ -6,8 +6,6 @@ import {COMMA, ENTER} from '@angular/cdk/keycodes';
 import {ElementRef, ViewChild} from '@angular/core';
 import {MatAutocompleteSelectedEvent} from '@angular/material/autocomplete';
 import {MatChipInputEvent} from '@angular/material/chips';
-import {Observable} from 'rxjs';
-import {map, startWith} from 'rxjs/operators';
 @Component({
   moduleId: module.id,
   selector: 'roles-cmp',
@@ -28,9 +26,9 @@ export class RolesComponent implements OnInit {
   count: Number = 3;
   display = "none";
   separatorKeysCodes: number[] = [ENTER, COMMA];
-  permissionsSelected: string[];
+  permissionsSelected: string[] =[];
   allPermissions: any ;
-  filteredPermissions: Observable<string[]>;
+
   @ViewChild('permissionInput') permissionInput: ElementRef<HTMLInputElement>;
   
   constructor(private formBuilder: FormBuilder, private http: HttpClient) {
@@ -88,7 +86,6 @@ export class RolesComponent implements OnInit {
 
   addData() {
     
-    
     this.onCloseHandled();
     this.roleObject.id = this.formValue.value.id;
     this.roleObject.name = this.formValue.value.name;
@@ -102,6 +99,7 @@ export class RolesComponent implements OnInit {
       this.getRoleData();
     })
     this.formValue.reset();
+    this.permissionsSelected=null;
 
   }
 

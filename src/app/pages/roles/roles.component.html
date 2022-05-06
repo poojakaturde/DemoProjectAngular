@@ -24,7 +24,7 @@
                               <mat-form-field style="width: 100%;" appearance="fill">
 
                                     <mat-chip-list #chipList aria-label="Permission selection">
-                                          <mat-chip *ngFor="let permission of permissions"
+                                          <mat-chip *ngFor="let permission of permissionsSelected"
                                                 (removed)="remove(permission)">
                                                 {{permission}}
 
