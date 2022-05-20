@@ -4,8 +4,10 @@ import { HttpClient } from '@angular/common/http';
 import { RoleData } from './roles.model';
 import {COMMA, ENTER} from '@angular/cdk/keycodes';
 import {ElementRef, ViewChild} from '@angular/core';
-import {MatAutocompleteSelectedEvent} from '@angular/material/autocomplete';
 import {MatChipInputEvent} from '@angular/material/chips';
+import { MatPaginator } from '@angular/material/paginator';
+import {MatSort} from '@angular/material/sort';
+import {MatTableDataSource} from '@angular/material/table';
 @Component({
   moduleId: module.id,
   selector: 'roles-cmp',
@@ -28,7 +30,12 @@ export class RolesComponent implements OnInit {
   separatorKeysCodes: number[] = [ENTER, COMMA];
   permissionsSelected: string[] =[];
   allPermissions: any ;
+  private changeCallback: Function;
+  displayedColumns: string[] = ['name', 'status', 'permissions','action'];
+  dataSource: MatTableDataSource<any>;
 
+  @ViewChild(MatPaginator) paginator: MatPaginator;
+  @ViewChild(MatSort) sort: MatSort;
   @ViewChild('permissionInput') permissionInput: ElementRef<HTMLInputElement>;
   
   constructor(private formBuilder: FormBuilder, private http: HttpClient) {
@@ -41,7 +48,7 @@ export class RolesComponent implements OnInit {
     if (value) {
       this.permissionsSelected.push(value);
     }
-    this.formValue.value.permissions.setValue(null);
+    
   }
 
   remove(permission: string): void {
@@ -52,12 +59,13 @@ export class RolesComponent implements OnInit {
     }
   }
 
-  selected(event: MatAutocompleteSelectedEvent): void {
-    console.log(event);
-    this.permissionsSelected.push(event.option.viewValue);
-    console.log(this.permissionsSelected)
-    this.permissionInput.nativeElement.value = '';
-    this.formValue.value.permissions.setValue(null);
+  applyFilter(event: Event) {
+    const filterValue = (event.target as HTMLInputElement).value;
+    this.dataSource.filter = filterValue.trim().toLowerCase();
+
+    if (this.dataSource.paginator) {
+      this.dataSource.paginator.firstPage();
+    }
   }
   
   ngOnInit(): void {
@@ -74,14 +82,20 @@ export class RolesComponent implements OnInit {
   }
 
   openModal() {
+    
     this.display = "block";
     this.submitBtn=true;
     this.showUpdateBtn=false;
     this.viewBtn=false;
+    if(this.submitBtn){
+      this.getPermissionData();
+      this.permissionsSelected=[];
+    }
     
   }
   onCloseHandled() {
     this.display = "none";
+    this.getRoleData();
   }
 
   addData() {
@@ -99,15 +113,16 @@ export class RolesComponent implements OnInit {
       this.getRoleData();
     })
     this.formValue.reset();
-    this.permissionsSelected=null;
-
+    this.permissionsSelected=[];
   }
 
   getRoleData() {
     this.http.get("http://localhost:3000/posts").subscribe((res) => {
       this.roleData = res;
+      this.dataSource=new MatTableDataSource(this.roleData);
+      this.dataSource.paginator=this.paginator;
+      this.dataSource.sort=this.sort;
     })
-
   }
 
   getPermissionData() {
@@ -139,6 +154,8 @@ export class RolesComponent implements OnInit {
   viewData(){
    
     this.display = "none";
+    this.formValue.reset();
+    this.permissionsSelected=[];
   }
 
   updateRole(data: any) {
@@ -158,15 +175,33 @@ export class RolesComponent implements OnInit {
     this.roleObject.id = this.formValue.value.id;
     this.roleObject.name = this.formValue.value.name;
     this.formValue.value.status ? this.roleObject.status = 'Active': this.roleObject.status = 'Inactive'
-    this.roleObject.permissions = this.permissionsSelected;
+    this.roleObject.permissions = this.formValue.value.permissions;
 
     this.http.put("http://localhost:3000/posts/"+this.roleObject.id,this.roleObject).subscribe((res) => {
       console.log(res);
-      this.formValue.reset();
       this.getRoleData();
       this.display = "none";
     })
+    this.formValue.reset();
+    this.permissionsSelected=[];
   }
 
-  
+  optionClicked(event: Event, item) {
+    event.stopPropagation();
+    this.toggleSelection(item);
+  }
+
+  toggleSelection(permission) {
+    permission.selected = !permission.selected;
+    if (permission.selected) {
+      this.permissionsSelected.push(permission);
+      this.changeCallback(this.permissionsSelected);
+    } else {
+      const i = this.permissionsSelected.findIndex(value => value === permission);
+      this.permissionsSelected.splice(i, 1);
+      this.changeCallback(this.permissionsSelected);
+    }
+
+  }
+
 }

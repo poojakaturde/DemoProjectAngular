@@ -5,6 +5,8 @@ export class ProjectData {
     admin:string ;
     manager:string ;
     role: string ;
+    tasks:string[] ;
     sdate: Date;
     edate: Date;
+   
 }

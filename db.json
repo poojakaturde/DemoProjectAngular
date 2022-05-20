@@ -1,86 +1,172 @@
 {
   "posts": [
     {
-      "id": 1,
+      "id": 9,
       "name": "Developer",
       "status": "Active",
       "permissions": [
-        "Process Document",
-        "View User"
+        {
+          "permission": "Update User",
+          "selected": true
+        },
+        {
+          "permission": "Process Document",
+          "selected": true
+        }
       ]
     },
     {
-      "id": 2,
-      "name": "pooja",
-      "status": "Active",
-      "permissions": [
-        "Process Document",
-        "Extract Document"
-      ]
-    },
-    {
-      "id": 3,
-      "name": "shri",
-      "status": "Active",
-      "permissions": [
-        "Update User"
-      ]
-    },
-    {
-      "id": 4,
-      "name": "shrinivas",
-      "status": "Active",
-      "permissions": [
-        "Process Document"
-      ]
-    },
-    {
-      "id": 5,
+      "id": 10,
       "name": "Tester",
       "status": "Active",
       "permissions": [
-        "Process Document",
-        "Update Processed Document"
+        {
+          "permission": "View User",
+          "selected": true
+        },
+        {
+          "permission": "Process Document",
+          "selected": true
+        }
+      ]
+    },
+    {
+      "id": 11,
+      "name": "Manager",
+      "status": "Active",
+      "permissions": [
+        {
+          "permission": "Update User",
+          "selected": true
+        },
+        {
+          "permission": "Extract Document",
+          "selected": true
+        }
+      ]
+    },
+    {
+      "id": 12,
+      "name": "Shree",
+      "status": "Active",
+      "permissions": [
+        {
+          "permission": "Process Document",
+          "selected": true
+        },
+        {
+          "permission": "View User",
+          "selected": true
+        }
       ]
     }
   ],
   "comments": [
     {
-      "id": "1",
+      "id": 1,
       "name": "Eversana",
       "status": "Active",
-      "admin": "Pooja",
-      "manager": "Akshay",
+      "admin": "Eversana",
+      "manager": "Akshay Kumar",
       "role": "Developer",
-      "sdate": "04-05-2022",
-      "edate": "26-06-2022"
+      "tasks": [
+        {
+          "task": "Update User",
+          "selected": true
+        }
+      ],
+      "sdate": "2022-05-17T18:30:00.000Z",
+      "edate": "2022-08-10T18:30:00.000Z"
     },
     {
-      "id": "2",
-      "name": "NTS",
-      "status": true,
-      "admin": "Pooja",
-      "manager": "shree",
-      "role": "hjkl",
-      "sdate": "2022-05-07",
-      "edate": "2022-05-31"
-    },
-    {
-      "id": "lMfQBz8",
-      "name": "Cardinal",
+      "id": 2,
+      "name": "Dyanamic Form",
       "status": "Active",
-      "admin": "shree",
-      "manager": "pooja",
-      "role": "developer",
-      "sdate": "2022-05-26",
-      "edate": "2022-08-25"
+      "admin": "Intellidoc",
+      "manager": "Akshay Kumar",
+      "role": "Manager",
+      "tasks": [
+        {
+          "task": "Process Document",
+          "selected": true
+        },
+        {
+          "task": "Update Processed Document",
+          "selected": true
+        }
+      ],
+      "sdate": "2022-05-17T18:30:00.000Z",
+      "edate": "2022-10-12T18:30:00.000Z"
+    },
+    {
+      "id": 3,
+      "name": null,
+      "status": "Inactive",
+      "admin": null,
+      "manager": null,
+      "role": "Manager",
+      "tasks": [],
+      "sdate": null,
+      "edate": null
     }
   ],
   "profile": [
-    "Update User",
-    "View User",
-    "Process Document",
-    "Extract Document",
-    "Update Processed Document"
+    {
+      "permission": "Update User",
+      "selected": false
+    },
+    {
+      "permission": "View User",
+      "selected": false
+    },
+    {
+      "permission": "Process Document",
+      "selected": false
+    },
+    {
+      "permission": "Extract Document",
+      "selected": false
+    },
+    {
+      "permission": "Update Processed Document",
+      "selected": false
+    }
+  ],
+  "tasks": [
+    {
+      "task": "Update User",
+      "selected": false
+    },
+    {
+      "task": "View User",
+      "selected": false
+    },
+    {
+      "task": "Process Document",
+      "selected": false
+    },
+    {
+      "task": "Extract Document",
+      "selected": false
+    },
+    {
+      "task": "Update Processed Document",
+      "selected": false
+    }
+  ],
+  "admin": [
+    "Eversana",
+    "NTS Admin",
+    "Intellidoc"
+  ],
+  "manager": [
+    "Akshay Kumar",
+    "K abhishek",
+    "Ketan Gaikwad"
+  ],
+  "roles": [
+    "Developer",
+    "Manager",
+    "Tester"
   ]
 }

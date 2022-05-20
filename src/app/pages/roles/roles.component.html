@@ -4,8 +4,8 @@
             <div class="modal-content">
                   <div class="modal-header">
                         <h4 class="modal-title">Role</h4>
-                        <button type="button" class="close" aria-label="Close" (click)="onCloseHandled()"><span
-                                    aria-hidden="true">&times;</span></button>
+                        <button type="button" *ngIf="showUpdateBtn || submitBtn" class="close" aria-label="Close"
+                              (click)="onCloseHandled()"><span aria-hidden="true">&times;</span></button>
                   </div>
                   <div class="modal-body">
                         <form [formGroup]="formValue">
@@ -21,26 +21,36 @@
                                     <label class="custom-control-label" for="customSwitch1"
                                           aria-labelledby="Status"></label>
                               </div>
-                              <mat-form-field style="width: 100%;" appearance="fill">
+                              <mat-form-field style="width: 100%;" appearance="fill" autocomplete="off">
 
                                     <mat-chip-list #chipList aria-label="Permission selection">
                                           <mat-chip *ngFor="let permission of permissionsSelected"
                                                 (removed)="remove(permission)">
-                                                {{permission}}
+                                                {{permission.permission}}
 
                                                 <i class="material-icons" matChipRemove>cancel</i>
                                           </mat-chip>
-                                          <input placeholder="" #permissionInput 
-                                                formControlName="permissions"
-                                                [matAutocomplete]="auto"
-                                                [matChipInputFor]="chipList"
+                                          <input placeholder="" #permissionInput formControlName="permissions"
+                                                [matAutocomplete]="auto" [matChipInputFor]="chipList"
                                                 [matChipInputSeparatorKeyCodes]="separatorKeysCodes"
                                                 (matChipInputTokenEnd)="add($event)">
                                     </mat-chip-list>
-                                    <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
+                                    <!-- <mat-autocomplete #auto="matAutocomplete" (optionSelected)="selected($event)">
                                           <mat-option *ngFor="let permission of allPermissions"
                                                 [value]="permission">
                                                 {{permission}}
+                                          </mat-option>
+                                    </mat-autocomplete> -->
+                                    <mat-autocomplete #auto="matAutocomplete">
+                                          <mat-option *ngFor="let permission of allPermissions"
+                                                [value]="permissionsSelected.permission">
+                                                <div (click)="optionClicked($event, permission);">
+                                                      <mat-checkbox [checked]="permission.selected"
+                                                            (change)="toggleSelection(permission)"
+                                                            (click)="$event.stopPropagation()">
+                                                            {{ permission.permission }}
+                                                      </mat-checkbox>
+                                                </div>
                                           </mat-option>
                                     </mat-autocomplete>
                               </mat-form-field>
@@ -59,7 +69,7 @@
       </div>
 </div>
 <hr>
-
+<!-- 
 <table class="table">
       <thead style="background-color: #acf; color: black;">
             <tr>
@@ -75,7 +85,13 @@
 
                   <td>{{data.name}}</td>
                   <td>{{data.status}}</td>
-                  <td>{{data.permissions}}</td>
+                  <td>
+                        <ul>
+                              <li *ngFor="let permission of data.permissions">
+                                    {{permission.permission}}
+                              </li>
+                        </ul>
+                  </td>
                   <td>
                         <i class="material-icons" (click)="ViewRole(data)">visibility</i>&nbsp;
                         <i class="material-icons" (click)="updateRole(data)">edit</i>&nbsp;
@@ -89,4 +105,53 @@
 
 <div class="text-right">
       <pagination-controls (pageChange)="p = $event"></pagination-controls>
+</div> -->
+
+<mat-form-field appearance="standard">
+      <mat-label>Filter</mat-label>
+      <input matInput (keyup)="applyFilter($event)" placeholder="Role Name" #input>
+</mat-form-field>
+
+<div class="mat-elevation-z8">
+      <table mat-table [dataSource]="dataSource" matSort>
+
+            <ng-container matColumnDef="name">
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header> Role Name </th>
+                  <td mat-cell *matCellDef="let row"> {{row.name}} </td>
+            </ng-container>
+
+            <ng-container matColumnDef="status">
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header> Status </th>
+                  <td mat-cell *matCellDef="let row"> {{row.status}}</td>
+            </ng-container>
+
+            <ng-container matColumnDef="permissions">
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header> Permissions </th>
+                  <td mat-cell *matCellDef="let row">
+                        <ul>
+                              <li *ngFor="let permission of row.permissions">
+                                    {{permission.permission}}
+                              </li>
+                        </ul>
+                  </td>
+            </ng-container>
+
+            <ng-container matColumnDef="action">
+                  <th mat-header-cell *matHeaderCellDef mat-sort-header> Actions </th>
+                  <td mat-cell *matCellDef="let row">
+                        <i class="material-icons" (click)="ViewRole(row)">visibility</i>&nbsp;
+                        <i class="material-icons" (click)="updateRole(row)">edit</i>&nbsp;
+                        <i class="material-icons" (click)="deleteRole(row)">delete</i>&nbsp;
+                  </td>
+            </ng-container>
+
+            <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+            <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+
+            <tr class="mat-row" *matNoDataRow>
+                  <td class="mat-cell" colspan="4">No data matching the filter "{{input.value}}"</td>
+            </tr>
+      </table>
+
+      <mat-paginator [pageSizeOptions]="[5, 10, 25, 100]" aria-label="Select page of roles"></mat-paginator>
 </div>
